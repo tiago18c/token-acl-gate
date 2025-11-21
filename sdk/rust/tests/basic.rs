@@ -84,10 +84,8 @@ async fn deletes_list() {
     let res = context.vm.send_transaction(tx);
     assert!(res.is_ok());
 
-    let list_config = context.vm.get_account(&list_config_address).unwrap();
-
-    assert_eq!(list_config.data.len(), 0);
-    assert_eq!(list_config.lamports, 0);
+    let list_config = context.vm.get_account(&list_config_address);
+    assert!(list_config.is_none());
 }
 
 #[tokio::test]
@@ -159,10 +157,9 @@ async fn removes_wallet() {
 
     assert_eq!(config.wallets_count, 0);
 
-    let wallet_entry = context.vm.get_account(&wallet_entry).unwrap();
+    let wallet_entry = context.vm.get_account(&wallet_entry);
 
-    assert_eq!(wallet_entry.data.len(), 0);
-    assert_eq!(wallet_entry.lamports, 0);
+    assert!(wallet_entry.is_none());
 }
 
 #[tokio::test]
